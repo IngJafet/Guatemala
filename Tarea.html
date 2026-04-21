@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guatemala: Memoria del Silencio</title>
+  <style>
+    :root {
+      --bg: #08111f;
+      --bg-2: #0f1b33;
+      --panel: rgba(15, 23, 42, 0.72);
+      --panel-2: rgba(20, 32, 58, 0.86);
+      --text: #eef2ff;
+      --muted: #b8c3d9;
+      --accent: #ffb703;
+      --accent-2: #22d3ee;
+      --accent-3: #8b5cf6;
+      --accent-4: #fb7185;
+      --accent-5: #34d399;
+      --line: rgba(255,255,255,.10);
+      --shadow: 0 18px 45px rgba(0,0,0,.28);
+      --radius: 22px;
+      --max: 1220px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      line-height: 1.6;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(255,183,3,.22), transparent 28%),
+        radial-gradient(circle at 100% 0%, rgba(34,211,238,.18), transparent 28%),
+        radial-gradient(circle at 50% 100%, rgba(139,92,246,.18), transparent 30%),
+        linear-gradient(135deg, var(--bg), var(--bg-2) 55%, #0b1228 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: radial-gradient(circle at center, black 35%, transparent 82%);
+      opacity: .28;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    .container { width: min(100% - 2rem, var(--max)); margin-inline: auto; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(14px);
+      background: rgba(8,17,31,.66);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: .9rem 0;
+    }
+
+    .brand {
+      font-weight: 900;
+      letter-spacing: .03em;
+      background: linear-gradient(90deg, #fff, #c7d2fe, #67e8f9);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .brand span { color: unset; }
+
+    .nav-links { display: flex; flex-wrap: wrap; gap: .6rem; }
+    .nav-links a {
+      color: var(--muted);
+      font-size: .95rem;
+      padding: .48rem .85rem;
+      border-radius: 999px;
+      transition: .25s ease;
+      border: 1px solid transparent;
+    }
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--text);
+      background: linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      border-color: rgba(255,255,255,.12);
+    }
+
+    .hero {
+      padding: 4rem 0 2.6rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -100px;
+      top: 30px;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(251,113,133,.18), transparent 66%);
+      filter: blur(8px);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 1.2rem;
+      align-items: stretch;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: auto auto -40px -40px;
+      width: 140px;
+      height: 140px;
+      background: radial-gradient(circle, rgba(34,211,238,.16), transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-copy { padding: 2rem; }
+    .eyebrow {
+      display: inline-flex;
+      gap: .45rem;
+      align-items: center;
+      padding: .42rem .85rem;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(255,183,3,.18), rgba(139,92,246,.16));
+      color: #fff5cf;
+      font-size: .86rem;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+    }
+
+    h1, h2, h3 { margin: 0 0 .8rem; line-height: 1.12; }
+    h1 {
+      font-size: clamp(2.25rem, 4vw, 4.6rem);
+      letter-spacing: -.04em;
+      text-wrap: balance;
+    }
+    .gradient-title {
+      background: linear-gradient(90deg, #ffffff 0%, #fde68a 28%, #67e8f9 62%, #c4b5fd 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    h2 { font-size: clamp(1.55rem, 2.6vw, 2.4rem); }
+    .lead { font-size: 1.06rem; color: var(--muted); max-width: 68ch; }
+
+    .hero-actions, .toggle-row, .filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .8rem;
+      margin-top: 1.25rem;
+    }
+
+    .btn, .chip, .select {
+      border: 1px solid var(--line);
+      color: var(--text);
+      padding: .82rem 1rem;
+      border-radius: 15px;
+      font-weight: 800;
+      transition: transform .2s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
+    }
+
+    .btn {
+      cursor: pointer;
+      background: linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+    }
+    .btn:hover, .chip:hover, .select:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(0,0,0,.18);
+    }
+    .btn.primary {
+      background: linear-gradient(135deg, rgba(255,183,3,.28), rgba(251,113,133,.18), rgba(139,92,246,.22));
+      border-color: rgba(255,255,255,.16);
+    }
+
+    .hero-side {
+      padding: 1.1rem;
+      display: grid;
+      gap: .9rem;
+    }
+
+    .quote {
+      padding: 1.2rem;
+      background: linear-gradient(135deg, rgba(34,211,238,.14), rgba(139,92,246,.14));
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.10);
+    }
+    .quote p { margin: 0; color: #eefcff; font-size: 1rem; }
+
+    .mini-grid, .stats-grid, .cards-3, .viz-grid {
+      display: grid;
+      gap: 1rem;
+    }
+    .mini-grid { grid-template-columns: repeat(2, 1fr); }
+    .stats-grid { grid-template-columns: repeat(4, 1fr); margin-top: 1rem; }
+    .cards-3 { grid-template-columns: repeat(3, 1fr); }
+    .viz-grid { grid-template-columns: 1.08fr .92fr; margin-top: 1rem; }
+
+    .mini-stat, .stat-card, .topic-card, .viz-card {
+      padding: 1.15rem;
+      border-radius: 18px;
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mini-stat:nth-child(1)::after,
+    .stat-card:nth-child(1)::after { background: radial-gradient(circle, rgba(255,183,3,.23), transparent 66%); }
+    .mini-stat:nth-child(2)::after,
+    .stat-card:nth-child(2)::after { background: radial-gradient(circle, rgba(34,211,238,.23), transparent 66%); }
+    .mini-stat:nth-child(3)::after,
+    .stat-card:nth-child(3)::after { background: radial-gradient(circle, rgba(139,92,246,.23), transparent 66%); }
+    .mini-stat:nth-child(4)::after,
+    .stat-card:nth-child(4)::after { background: radial-gradient(circle, rgba(52,211,153,.23), transparent 66%); }
+
+    .mini-stat::after, .stat-card::after, .topic-card::after {
+      content: "";
+      position: absolute;
+      right: -20px;
+      bottom: -25px;
+      width: 120px;
+      height: 120px;
+      pointer-events: none;
+    }
+
+    .mini-stat .n { font-size: 1.65rem; font-weight: 900; margin-bottom: .2rem; }
+    .mini-stat .t, .section-head p, .topic-card p, .stat-label, .stat-detail, .timeline-item p, .acc-panel p, .acc-panel ul, .legend-note { color: var(--muted); }
+
+    section { padding: 1.3rem 0 2.25rem; }
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .section-head p { margin: 0; max-width: 70ch; }
+
+    .stat-card { isolation: isolate; }
+    .stat-value {
+      font-size: clamp(1.85rem, 3vw, 2.9rem);
+      font-weight: 950;
+      letter-spacing: -.04em;
+      margin: .35rem 0;
+    }
+
+    .chip {
+      cursor: pointer;
+      background: rgba(255,255,255,.05);
+    }
+    .chip.active {
+      background: linear-gradient(135deg, rgba(255,183,3,.18), rgba(34,211,238,.14), rgba(139,92,246,.18));
+      border-color: rgba(255,255,255,.16);
+      color: #fff;
+    }
+
+    .select {
+      background: rgba(255,255,255,.05);
+      min-width: 220px;
+    }
+
+    .bars {
+      display: grid;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .bar-row {
+      display: grid;
+      grid-template-columns: 150px 1fr 72px;
+      gap: .8rem;
+      align-items: center;
+    }
+    .track {
+      width: 100%;
+      height: 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.06);
+      position: relative;
+    }
+    .track::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.08), transparent);
+      transform: translateX(-100%);
+      animation: shine 2.6s linear infinite;
+      pointer-events: none;
+    }
+    .fill {
+      height: 100%;
+      width: 0;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--bar-color-1, rgba(255,183,3,.7)), var(--bar-color-2, rgba(34,211,238,.9)));
+      transition: width .95s cubic-bezier(.2,.9,.2,1);
+      position: relative;
+    }
+
+    .timeline {
+      position: relative;
+      display: grid;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 14px;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(180deg, rgba(255,183,3,.8), rgba(34,211,238,.8), rgba(139,92,246,.7));
+      border-radius: 999px;
+    }
+    .timeline-item {
+      position: relative;
+      padding: 1rem 1rem 1rem 2.8rem;
+      margin-left: .2rem;
+      cursor: pointer;
+      transition: transform .2s ease, border-color .2s ease;
+    }
+    .timeline-item:hover { transform: translateX(4px); }
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: .02rem;
+      top: 1.22rem;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-3));
+      box-shadow: 0 0 0 7px rgba(139,92,246,.12);
+    }
+    .timeline-item h3 { font-size: 1.06rem; }
+    .timeline-item.active {
+      border-color: rgba(255,255,255,.18);
+      background: linear-gradient(135deg, rgba(255,183,3,.12), rgba(34,211,238,.10), rgba(139,92,246,.12));
+    }
+
+    .detail-box {
+      margin-top: 1rem;
+      padding: 1rem 1.1rem;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+    }
+
+    .accordion { display: grid; gap: .8rem; margin-top: 1rem; }
+    .acc-item {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+      background: rgba(255,255,255,.03);
+    }
+    .acc-btn {
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      border: 0;
+      color: var(--text);
+      font: inherit;
+      cursor: pointer;
+      padding: 1rem 1.1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      font-weight: 900;
+    }
+    .acc-btn span:last-child { color: var(--accent); font-size: 1.2rem; transition: transform .25s ease; }
+    .acc-item.open .acc-btn span:last-child { transform: rotate(45deg); }
+    .acc-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .3s ease; }
+    .acc-panel > div { overflow: hidden; padding: 0 1.1rem; }
+    .acc-item.open .acc-panel { grid-template-rows: 1fr; }
+    .acc-item.open .acc-panel > div { padding-bottom: 1rem; }
+    .acc-panel ul { padding-left: 1.1rem; margin: 0; }
+
+    .tooltip-box {
+      margin-top: 1rem;
+      padding: .95rem 1rem;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(52,211,153,.12), rgba(34,211,238,.12));
+      border: 1px solid rgba(255,255,255,.10);
+      color: #e8fff8;
+      min-height: 76px;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .8rem;
+      margin-top: .9rem;
+    }
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .note {
+      padding: 1rem 1.1rem;
+      background: linear-gradient(135deg, rgba(251,113,133,.12), rgba(255,183,3,.10));
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 18px;
+      color: #ffe7ec;
+      margin-top: 1rem;
+    }
+
+    .footer {
+      padding: 1rem 0 3rem;
+      color: transparent;
+      text-align: center;
+      user-select: none;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px) scale(.985);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+    .reveal.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .float {
+      animation: floaty 5s ease-in-out infinite;
+    }
+
+    @keyframes shine { to { transform: translateX(100%); } }
+    @keyframes floaty {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid, .viz-grid, .cards-3, .stats-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 720px) {
+      .nav { align-items: flex-start; flex-direction: column; }
+      .hero-grid, .viz-grid, .cards-3, .stats-grid, .mini-grid { grid-template-columns: 1fr; }
+      .bar-row { grid-template-columns: 1fr; }
+      .hero { padding-top: 2.5rem; }
+      .hero-copy, .hero-side { padding: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <div class="brand">Guatemala <span>Memoria del Silencio</span></div>
+      <nav class="nav-links">
+        <a href="#contexto">Contexto</a>
+        <a href="#cifras">Cifras</a>
+        <a href="#linea-tiempo">Línea del tiempo</a>
+        <a href="#hallazgos">Hallazgos</a>
+        <a href="#legado">Legado</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <article class="card hero-copy reveal show">
+          <div class="eyebrow">Informe de la CEH · Entregado el 25 de febrero de 1999</div>
+          <h1><span class="gradient-title">Guatemala: Memoria del Silencio</span></h1>
+          <p class="lead">
+            Explora de forma visual los datos, los hallazgos y el contexto histórico del informe final de la Comisión para el Esclarecimiento Histórico. Aquí puedes cambiar vistas, abrir paneles, recorrer la cronología y descubrir ideas clave paso a paso.
+          </p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#cifras">Explorar cifras</a>
+            <button class="btn" id="toggleMotion">Pausar animaciones</button>
+            <button class="btn" id="randomFact">Dato sorpresa</button>
+          </div>
+          <div class="tooltip-box float" id="factBox">Toca <strong>Dato sorpresa</strong> para ver un dato importante del informe.</div>
+        </article>
+
+        <aside class="card hero-side reveal show">
+          <div class="quote">
+            <p>
+              “Memoria del Silencio” se convirtió en un hito para la verdad histórica, la dignificación de las víctimas y la discusión pública sobre justicia, memoria y reparación en Guatemala.
+            </p>
+          </div>
+          <div class="mini-grid">
+            <div class="mini-stat">
+              <div class="n">1962–1996</div>
+              <div class="t">Periodo del conflicto armado interno</div>
+            </div>
+            <div class="mini-stat">
+              <div class="n">1994</div>
+              <div class="t">Año de creación de la CEH</div>
+            </div>
+            <div class="mini-stat">
+              <div class="n">1999</div>
+              <div class="t">Publicación del informe final</div>
+            </div>
+            <div class="mini-stat">
+              <div class="n">25 feb</div>
+              <div class="t">Fecha de entrega al Estado</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="contexto">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <h2>Cifras clave del informe</h2>
+            <p>
+              Cambia la vista, filtra el tipo de visualización y pasa por los elementos para descubrir distintos ángulos de lectura.
+            </p>
+          </div>
+        </div>
+
+        <div class="filter-row reveal">
+          <button class="chip active" data-view="responsables">Responsabilidad</button>
+          <button class="chip" data-view="identidad">Identidad de víctimas</button>
+          <button class="chip" data-view="impacto">Impacto general</button>
+          <select class="select" id="chartMode">
+            <option value="bars">Vista de barras</option>
+            <option value="cards">Vista resumida</option>
+          </select>
+        </div>
+
+        <div class="stats-grid">
+          <article class="card stat-card reveal">
+            <div class="stat-label">Víctimas documentadas por la CEH</div>
+            <div class="stat-value" data-counter="42275">0</div>
+            <div class="stat-detail">Casos registrados a partir de miles de testimonios y documentación.</div>
+          </article>
+          <article class="card stat-card reveal">
+            <div class="stat-label">Estimación de muertos y desaparecidos</div>
+            <div class="stat-value" data-counter="200000">0</div>
+            <div class="stat-detail">La CEH estimó que el saldo superó las doscientas mil personas.</div>
+          </article>
+          <article class="card stat-card reveal">
+            <div class="stat-label">Víctimas identificadas que eran mayas</div>
+            <div class="stat-value" data-counter="83" data-suffix="%">0</div>
+            <div class="stat-detail">El informe mostró el impacto desproporcionado sobre pueblos mayas.</div>
+          </article>
+          <article class="card stat-card reveal">
+            <div class="stat-label">Hechos atribuidos a agentes del Estado</div>
+            <div class="stat-value" data-counter="93" data-suffix="%">0</div>
+            <div class="stat-detail">Incluye Ejército, fuerzas de seguridad y estructuras asociadas.</div>
+          </article>
+        </div>
+
+        
+
+        <div class="viz-grid">
+          <article class="card viz-card reveal">
+            <h3 id="vizTitle">Distribución de responsabilidad</h3>
+            <p id="vizText" style="margin: 0;">
+              La CEH concluyó que la gran mayoría de las violaciones registradas fueron atribuibles a agentes del Estado y estructuras vinculadas.
+            </p>
+            <div class="bars" id="bars"></div>
+            <div class="legend">
+              <span><i class="dot" style="background: linear-gradient(135deg, #ffb703, #fb7185)"></i>Comparación principal</span>
+              <span><i class="dot" style="background: linear-gradient(135deg, #22d3ee, #8b5cf6)"></i>Lectura visual complementaria</span>
+            </div>
+            <p class="legend-note" id="legendNote">Selecciona otra categoría para actualizar la comparación.</p>
+          </article>
+
+          <article class="card viz-card reveal">
+            <h3>Claves de lectura</h3>
+            <div class="accordion">
+              <div class="acc-item open">
+                <button class="acc-btn"><span>¿Qué significan estas cifras?</span><span>+</span></button>
+                <div class="acc-panel"><div><p>Las cifras combinan datos documentados por la CEH con estimaciones más amplias sobre la magnitud del conflicto. Algunas representan casos plenamente registrados; otras, una estimación histórica del impacto total.</p></div></div>
+              </div>
+              <div class="acc-item">
+                <button class="acc-btn"><span>¿Por qué son importantes?</span><span>+</span></button>
+                <div class="acc-panel"><div><p>Ayudan a dimensionar la gravedad del conflicto, el peso de la violencia estatal y el impacto desproporcionado sobre comunidades indígenas, especialmente mayas.</p></div></div>
+              </div>
+              <div class="acc-item">
+                <button class="acc-btn"><span>¿Qué límites tienen?</span><span>+</span></button>
+                <div class="acc-panel"><div><p>Ninguna comisión puede capturar absolutamente todos los casos. Por eso el informe distingue entre víctimas documentadas y estimaciones globales del conflicto.</p></div></div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="linea-tiempo">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <h2>Línea del tiempo</h2>
+            <p>
+              Un recorrido rápido por algunos momentos clave relacionados con el conflicto y el informe.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline" id="timeline">
+          <article class="card timeline-item reveal active" data-detail="El conflicto armado interno se extendió por más de tres décadas y marcó profundamente la historia contemporánea de Guatemala.">
+            <h3>1962 · Inicio del conflicto armado interno</h3>
+            <p>Comienza un prolongado periodo de confrontación armada, represión, persecución política y violencia estructural.</p>
+          </article>
+          <article class="card timeline-item reveal" data-detail="La CEH ubicó estos años entre los más devastadores, con masacres, arrasamiento de comunidades y daño extremo en áreas rurales e indígenas.">
+            <h3>1981–1983 · Pico de violencia</h3>
+            <p>La CEH identificó estos años como los más intensos del conflicto, con masacres, tierra arrasada y devastación comunitaria.</p>
+          </article>
+          <article class="card timeline-item reveal" data-detail="La creación de la CEH respondió a la necesidad de esclarecer lo ocurrido y dejar una base histórica para la memoria y la reparación.">
+            <h3>1994 · Creación de la CEH</h3>
+            <p>La Comisión para el Esclarecimiento Histórico fue acordada para investigar el pasado reciente y presentar conclusiones y recomendaciones.</p>
+          </article>
+          <article class="card timeline-item reveal" data-detail="La firma de la paz puso fin formal al conflicto, aunque no cerró de inmediato las heridas sociales, políticas y comunitarias.">
+            <h3>1996 · Firma de la paz</h3>
+            <p>Con los Acuerdos de Paz finaliza formalmente el enfrentamiento armado interno.</p>
+          </article>
+          <article class="card timeline-item reveal" data-detail="La entrega del informe final convirtió a la CEH en una referencia clave para la verdad histórica y la memoria pública en Guatemala.">
+            <h3>1999 · Entrega de “Memoria del Silencio”</h3>
+            <p>El informe final se presenta como una referencia fundamental para la verdad, la memoria histórica y las demandas de justicia.</p>
+          </article>
+        </div>
+        <div class="detail-box reveal" id="timelineDetail"><strong>Detalle:</strong> El conflicto armado interno se extendió por más de tres décadas y marcó profundamente la historia contemporánea de Guatemala.</div>
+      </div>
+    </section>
+
+    <section id="hallazgos">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <h2>Hallazgos principales</h2>
+            <p>
+              Haz clic para desplegar los ejes más relevantes del informe.
+            </p>
+          </div>
+        </div>
+
+        <div class="accordion">
+          <div class="acc-item reveal open">
+            <button class="acc-btn"><span>Responsabilidad estatal y patrones de violencia</span><span>+</span></button>
+            <div class="acc-panel"><div>
+              <p>
+                El informe concluyó que la mayor parte de las violaciones documentadas fue atribuida a agentes del Estado. También describió la existencia de patrones sistemáticos de represión y terror en distintas regiones del país.
+              </p>
+            </div></div>
+          </div>
+
+          <div class="acc-item reveal">
+            <button class="acc-btn"><span>Impacto desproporcionado sobre pueblos mayas</span><span>+</span></button>
+            <div class="acc-panel"><div>
+              <p>
+                La CEH destacó que la violencia afectó de forma especialmente grave a los pueblos mayas, tanto en número de víctimas como en destrucción de comunidades, tejidos sociales, cultura y territorio.
+              </p>
+            </div></div>
+          </div>
+
+          <div class="acc-item reveal">
+            <button class="acc-btn"><span>Causas históricas</span><span>+</span></button>
+            <div class="acc-panel"><div>
+              <ul>
+                <li>Racismo y exclusión histórica hacia pueblos indígenas.</li>
+                <li>Concentración de tierra, riqueza y poder político.</li>
+                <li>Debilidad del Estado de derecho e impunidad prolongada.</li>
+                <li>Anticomunismo radicalizado y militarización.</li>
+              </ul>
+            </div></div>
+          </div>
+
+          <div class="acc-item reveal">
+            <button class="acc-btn"><span>Recomendaciones</span><span>+</span></button>
+            <div class="acc-panel"><div>
+              <ul>
+                <li>Medidas de reparación y dignificación para las víctimas.</li>
+                <li>Preservación de la memoria histórica y difusión del informe.</li>
+                <li>Fortalecimiento de la justicia y lucha contra la impunidad.</li>
+                <li>Reformas institucionales orientadas a la no repetición.</li>
+              </ul>
+            </div></div>
+          </div>
+        </div>
+
+        
+      </div>
+    </section>
+
+    <section id="legado">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <h2>Legado y memoria</h2>
+            <p>
+              Más de dos décadas después, “Memoria del Silencio” sigue siendo una referencia para debates sobre verdad, justicia transicional, reparación, archivos, educación y memoria pública en Guatemala.
+            </p>
+          </div>
+        </div>
+
+        <div class="cards-3">
+          <article class="card topic-card reveal">
+            <h3>Verdad</h3>
+            <p>Contribuyó a instalar una narrativa documentada sobre la magnitud del daño y las responsabilidades históricas.</p>
+          </article>
+          <article class="card topic-card reveal">
+            <h3>Justicia</h3>
+            <p>Sirvió como base de referencia en procesos de búsqueda, litigio, investigación y reclamos de las víctimas.</p>
+          </article>
+          <article class="card topic-card reveal">
+            <h3>Memoria</h3>
+            <p>Ayudó a mantener viva la discusión pública sobre el pasado reciente y la necesidad de no repetirlo.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer container">.</footer>
+
+  <script>
+    const datasets = {
+      responsables: {
+        title: 'Distribución de responsabilidad',
+        text: 'La CEH concluyó que la gran mayoría de las violaciones registradas fueron atribuibles a agentes del Estado y estructuras vinculadas.',
+        note: 'Esta vista destaca la asimetría en la responsabilidad señalada por el informe.',
+        colors: ['#ffb703', '#fb7185'],
+        items: [
+          { label: 'Estado y afines', value: 93 },
+          { label: 'Guerrilla', value: 3 },
+          { label: 'No aclarado / otros', value: 4 }
+        ]
+      },
+      identidad: {
+        title: 'Identidad de víctimas identificadas',
+        text: 'Entre las víctimas plenamente identificadas, el informe señaló un impacto desproporcionado sobre la población maya.',
+        note: 'Esta vista ayuda a observar la dimensión étnica del impacto del conflicto.',
+        colors: ['#22d3ee', '#8b5cf6'],
+        items: [
+          { label: 'Maya', value: 83 },
+          { label: 'Ladino', value: 17 }
+        ]
+      },
+      impacto: {
+        title: 'Escala del impacto humano',
+        text: 'Esta vista compara la cifra documentada por la CEH con la estimación global de muertos y desaparecidos del conflicto.',
+        note: 'Documentar y estimar no es lo mismo: una cifra muestra casos registrados y la otra la magnitud total proyectada.',
+        colors: ['#34d399', '#22d3ee'],
+        items: [
+          { label: 'Documentadas', value: 21, real: '42,275' },
+          { label: 'Estimación total', value: 100, real: 'Más de 200,000' }
+        ]
+      }
+    };
+
+    const bars = document.getElementById('bars');
+    const chips = [...document.querySelectorAll('.chip[data-view]')];
+    const vizTitle = document.getElementById('vizTitle');
+    const vizText = document.getElementById('vizText');
+    const legendNote = document.getElementById('legendNote');
+    const chartMode = document.getElementById('chartMode');
+    const factBox = document.getElementById('factBox');
+    const timelineDetail = document.getElementById('timelineDetail');
+    let motionEnabled = true;
+    let activeView = 'responsables';
+
+    const facts = [
+      'La CEH entregó el informe final el 25 de febrero de 1999.',
+      'La comisión documentó 42,275 víctimas en su investigación.',
+      'La CEH estimó más de 200,000 muertos y desaparecidos durante el conflicto.',
+      'Entre las víctimas identificadas, una gran mayoría era población maya.',
+      'El informe sigue siendo una referencia central para la memoria histórica en Guatemala.'
+    ];
+
+    function renderBars(key) {
+      const set = datasets[key];
+      activeView = key;
+      vizTitle.textContent = set.title;
+      vizText.textContent = set.text;
+      legendNote.textContent = set.note;
+      bars.innerHTML = '';
+
+      if (chartMode.value === 'cards') {
+        bars.style.gridTemplateColumns = 'repeat(auto-fit, minmax(170px, 1fr))';
+        set.items.forEach((item, index) => {
+          const card = document.createElement('div');
+          card.className = 'topic-card';
+          card.style.background = 'linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.03))';
+          card.style.border = '1px solid rgba(255,255,255,.08)';
+          card.innerHTML = `
+            <h3 style="font-size:1rem;">${item.label}</h3>
+            <div style="font-size:2rem;font-weight:900;letter-spacing:-.03em;margin:.15rem 0;">${item.real ?? item.value + '%'}</div>
+            <p>${index === 0 ? 'Dato principal de esta vista.' : 'Comparación dentro de la misma categoría.'}</p>
+          `;
+          bars.appendChild(card);
+        });
+        return;
+      }
+
+      bars.style.gridTemplateColumns = '1fr';
+      set.items.forEach((item, index) => {
+        const row = document.createElement('div');
+        row.className = 'bar-row';
+        row.innerHTML = `
+          <span>${item.label}</span>
+          <div class="track">
+            <div class="fill" style="width:${motionEnabled ? 0 : item.value}%; --bar-color-1:${set.colors[0]}; --bar-color-2:${set.colors[1]};"></div>
+          </div>
+          <strong>${item.real ?? item.value + '%'}</strong>
+        `;
+        row.addEventListener('mouseenter', () => {
+          legendNote.textContent = `${item.label}: ${item.real ?? item.value + '%'} dentro de la vista ${set.title.toLowerCase()}.`;
+        });
+        row.addEventListener('mouseleave', () => {
+          legendNote.textContent = set.note;
+        });
+        bars.appendChild(row);
+      });
+
+      requestAnimationFrame(() => {
+        bars.querySelectorAll('.fill').forEach((fill, i) => {
+          fill.style.width = `${set.items[i].value}%`;
+        });
+      });
+    }
+
+    chips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        chips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        renderBars(chip.dataset.view);
+      });
+    });
+
+    chartMode.addEventListener('change', () => renderBars(activeView));
+
+    document.querySelectorAll('.acc-item').forEach(item => {
+      const btn = item.querySelector('.acc-btn');
+      btn.addEventListener('click', () => item.classList.toggle('open'));
+    });
+
+    document.querySelectorAll('.timeline-item').forEach(item => {
+      item.addEventListener('click', () => {
+        document.querySelectorAll('.timeline-item').forEach(el => el.classList.remove('active'));
+        item.classList.add('active');
+        timelineDetail.innerHTML = `<strong>Detalle:</strong> ${item.dataset.detail}`;
+      });
+    });
+
+    document.getElementById('randomFact').addEventListener('click', () => {
+      const fact = facts[Math.floor(Math.random() * facts.length)];
+      factBox.innerHTML = `<strong>Dato sorpresa:</strong> ${fact}`;
+      factBox.classList.remove('float');
+      void factBox.offsetWidth;
+      factBox.classList.add('float');
+    });
+
+    const counters = document.querySelectorAll('[data-counter]');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('show');
+        const counterEls = entry.target.querySelectorAll?.('[data-counter]') ?? [];
+        counterEls.forEach(counter => animateCounter(counter));
+      });
+    }, { threshold: .15 });
+
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    function animateCounter(el) {
+      if (el.dataset.done === 'true' || !motionEnabled) {
+        if (!motionEnabled) {
+          const val = Number(el.dataset.counter);
+          el.textContent = formatNumber(val) + (el.dataset.suffix || '');
+        }
+        return;
+      }
+      const target = Number(el.dataset.counter);
+      const suffix = el.dataset.suffix || '';
+      const duration = 1450;
+      const start = performance.now();
+      function tick(now) {
+        const p = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        const value = Math.floor(target * eased);
+        el.textContent = formatNumber(value) + suffix;
+        if (p < 1) requestAnimationFrame(tick);
+        else {
+          el.textContent = formatNumber(target) + suffix;
+          el.dataset.done = 'true';
+        }
+      }
+      requestAnimationFrame(tick);
+    }
+
+    function formatNumber(num) {
+      return new Intl.NumberFormat('es-GT').format(num);
+    }
+
+    document.getElementById('toggleMotion').addEventListener('click', (e) => {
+      motionEnabled = !motionEnabled;
+      e.target.textContent = motionEnabled ? 'Pausar animaciones' : 'Activar animaciones';
+      if (!motionEnabled) {
+        document.querySelectorAll('.fill').forEach((fill, i) => {
+          const set = datasets[activeView];
+          if (set.items[i]) fill.style.width = set.items[i].value + '%';
+        });
+        counters.forEach(el => {
+          el.textContent = formatNumber(Number(el.dataset.counter)) + (el.dataset.suffix || '');
+        });
+      } else {
+        renderBars(activeView);
+      }
+    });
+
+    const sections = [...document.querySelectorAll('section[id]')];
+    const links = [...document.querySelectorAll('.nav-links a')];
+    const spy = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          links.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
+          });
+        }
+      });
+    }, { rootMargin: '-40% 0px -45% 0px', threshold: 0 });
+    sections.forEach(s => spy.observe(s));
+
+    renderBars('responsables');
+    counters.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight) animateCounter(el);
+    });
+  </script>
+</body>
+</html>
